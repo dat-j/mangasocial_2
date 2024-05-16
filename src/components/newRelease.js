@@ -7,8 +7,9 @@ import { useSelector } from "react-redux";
 
 
 
-const NewRelease = ({readmode}) => {
-    const [readMode, setReadMode] = useState(readmode);
+const NewRelease = () => {
+    
+    const [readMode, setReadMode] = useState(useSelector((state)=>state.ReadMode.readmode));
     const [data,setData] = useState();
     const newRelease = useFetch(0);
     console.log(newRelease)
@@ -33,7 +34,7 @@ const NewRelease = ({readmode}) => {
                 ))}
             </div> */}
             
-            {readMode==0?(<div className="grid md:grid-cols-5 2xl:grid-cols-10  gap-[20px] px-[60px] pb-[60px]">
+            {readMode===false?(<div className="grid md:grid-cols-5 2xl:grid-cols-10  gap-[20px] px-[60px] pb-[60px]">
             {firstFiveItem.map((item, index) => (
                 <CardManga
                     key={index}

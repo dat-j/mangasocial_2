@@ -19,6 +19,7 @@ const ChapterPage = () => {
   const params = useParams();
   const { slug } = params;
   const sv = useSelector((state)=>state.server.sv);
+  const readmode = useSelector((state)=>state.ReadMode.readmode);
   const user_id = sessionStorage.getItem("user_id")
   
   const handleShowTab = () => {
@@ -40,11 +41,21 @@ const ChapterPage = () => {
   }
   const fetchChapterDetail = async () => {
     try {
-      const response = await axios.get(
-        `https://apimanga.mangasocial.online/rmanga/${slug}`
-      );
-      setChapterDetail(response.data);
+      if(readmode==false){
+        const response = await axios.get(
+          `https://apimanga.mangasocial.online/rmanga/${slug}`
+        );
+        setChapterDetail(response.data);
       console.log("chapter detail:",response.data)
+      }
+      else{
+        const response = await axios.get(
+          `https://apimanga.mangasocial.online/web/rmanga/${sv}/${slug}/`
+        );
+        setChapterDetail(response.data);
+      console.log("chapter detail:",response.data)
+      }
+      
     } catch (error) {
       console.log(error);
       console.log("slug:", slug)
@@ -306,7 +317,7 @@ const ChapterPage = () => {
                   alt=""
                   className="h-[32px] w-[32px]"
                 />
-                <div>{chapterDetail[0]?.chapters.length} chapters</div>
+                {/* <div>{(chapterDetail[0]?.chapters).length} chapters</div> */}
               </div>
               <div className="px-12 py-6">
                 {sortedChapters
