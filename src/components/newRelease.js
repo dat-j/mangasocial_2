@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 
 
 
-const NewRelease = () => {
-    const [readMode, setReadMode] = useState(sessionStorage.getItem("readmode"));
+const NewRelease = ({readmode}) => {
+    const [readMode, setReadMode] = useState(readmode);
     const [data,setData] = useState();
     const newRelease = useFetch(0);
     console.log(newRelease)
@@ -18,7 +18,7 @@ const NewRelease = () => {
         <>
 
 
-            <div className="grid md:grid-cols-5 2xl:grid-cols-10  gap-[20px] px-[60px] pb-[60px]">
+            {/* <div className="grid md:grid-cols-5 2xl:grid-cols-10  gap-[20px] px-[60px] pb-[60px]">
                 {firstFiveItem.map((item, index) => (
                     <CardManga
                         key={index}
@@ -31,9 +31,9 @@ const NewRelease = () => {
 
                     />
                 ))}
-            </div>
+            </div> */}
             
-            {/* {readMode==="off"?(<div className="grid md:grid-cols-5 2xl:grid-cols-10  gap-[20px] px-[60px] pb-[60px]">
+            {readMode==0?(<div className="grid md:grid-cols-5 2xl:grid-cols-10  gap-[20px] px-[60px] pb-[60px]">
             {firstFiveItem.map((item, index) => (
                 <CardManga
                     key={index}
@@ -61,7 +61,7 @@ const NewRelease = () => {
 
                 />
             ))}
-            </div>)} */}
+            </div>)}
             
 
 

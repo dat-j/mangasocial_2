@@ -25,7 +25,7 @@ const ToggleReadMode = () => {
           console.log(res)
           const res2 = await axios.get("http://apimanga.mangasocial.online/mode/get-web-server/"+id_user()+"/");
           console.log(res2.data.msg);
-          sessionStorage.setItem("readmode",res2.data.msg)
+          sessionStorage.setItem("readmode",res2.data.msg==="on"?1:0)
       } catch (error) {
           console.log(error)
       }
@@ -57,6 +57,7 @@ const ToggleReadMode = () => {
   const handleReadMode = () => {
     getDataRead();
     checkReadMode();
+    window.location.reload(true)
     // setReadMode(readMode);
   };
   return (

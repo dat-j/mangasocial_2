@@ -31,9 +31,9 @@ const NewUsers = () => {
             {newUser &&
               newUser.map((newUser, index) => {
                 return (
-                  <Link to="/view-user-profile" state={newUser.id_user}>
+                  <Link to="/view-user-profile" state={newUser.id_user} key={index}>
                     
-                    <div className="username md:pt-0 xl:pt-[30px]" key={newUser.id_user}>
+                    <div className="username md:pt-0 xl:pt-[30px]" >
                       <img
                         className="avatar"
                         src={newUser.avatar_user}

@@ -22,7 +22,7 @@ import ToggleReadMode from "../components/ToggleBtn/ToggleReadMode";
 
 export default function Index() {
   let sv = useSelector((state)=>state.server.sv);
-  const RD = sessionStorage.getItem("readmode");
+  const readmode = sessionStorage.getItem("readmode");
   return (
     <>
       <div className="cont">
@@ -43,7 +43,7 @@ export default function Index() {
             <p>See all</p>
           </Link>
         </div>
-        <NewRelease/>
+        <NewRelease readmode={readmode}/>
 
         <div className="title-released-comic">
           <h2>Recent Comics</h2>
