@@ -10,10 +10,7 @@ import { useSelector } from "react-redux";
 const NewRelease = () => {
     
     const [readMode, setReadMode] = useState(useSelector((state)=>state.ReadMode.readmode));
-    const [data,setData] = useState();
     const newRelease = useFetch(0);
-    console.log(newRelease)
-    console.log(readMode)
     const firstFiveItem = newRelease.slice(0, 10);
     return (
         <>
