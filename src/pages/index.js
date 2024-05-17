@@ -19,6 +19,7 @@ import Top15Comics from "../components/top15Comics";
 import FreeComic from "../components/freeComic";
 import NewsComics from "../components/newsComics";
 import ToggleReadMode from "../components/ToggleBtn/ToggleReadMode";
+import Loading from "../components/Loading/Loading";
 
 export default function Index() {
   let sv = useSelector((state)=>state.server.sv);
