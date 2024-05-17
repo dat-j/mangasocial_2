@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { Button } from "antd";
 import fileDownload from "js-file-download";
 import FileSaver from "file-saver";
+import Loading from "../../components/Loading/Loading";
+import LoadingWhite from "../../components/Loading/LoadingWhite";
 
 const ReadChapter = () => {
   const params = useParams();
@@ -15,6 +17,10 @@ const ReadChapter = () => {
   const [chapterDetail, setChapterDetail] = useState([]);
   const [listChapter, setListChapter] = useState([]);
   const [chooseChapter, setChooseChapter] = useState("");
+  const [loading, setLoading] = useState(true);
+
+
+
   const sv = useSelector((state) => state.server.sv);
   const readmode = useSelector((state) => state.ReadMode.readmode);
   const navigate = useNavigate();
@@ -34,7 +40,9 @@ const ReadChapter = () => {
         );
   
         setChapterDetail(response.data);
+        
         console.log(chapterDetail);
+        setLoading(false)
       }
     } catch (error) {
       console.log("error", error);
@@ -79,7 +87,8 @@ const ReadChapter = () => {
         const response = await axios.get(
           `https://apimanga.mangasocial.online/${sv}/rmanga/${slug}`
         );
-        setListChapter(Object.keys(response.data.chapters));
+        setListChapter(Object.keys((response.data[0]).chapters));
+        console.log(Object.keys((response.data[0]).chapters))
       }
     } catch (error) {
       console.log(error);
@@ -88,11 +97,13 @@ const ReadChapter = () => {
 
   useEffect(() => {
     fetchListChapter();
+    fetchChapter();
     // eslint-disable-next-line
   }, [slug]);
 
   useEffect(() => {
     fetchChapter();
+    fetchListChapter();
     // eslint-disable-next-line
   }, [slug, id]);
 
@@ -115,9 +126,7 @@ const ReadChapter = () => {
     console.log("aaa");
   };
 
-  let currentChapter = listChapter.indexOf(
-    `http://apimanga.mangasocial.online/rmanga/${slug}/${id}`
-  );
+  let currentChapter = listChapter.indexOf(id);
   console.log(currentChapter)
 
   const prevChapter = () => {
@@ -128,6 +137,7 @@ const ReadChapter = () => {
       );
       currentChapter--;
       navigate(`/chapter/${slug}/${prev}`);
+      setChooseChapter(prev)
       console.log(currentChapter);
     } else {
       alert("What!!???");
@@ -136,12 +146,12 @@ const ReadChapter = () => {
 
   const nextChap = () => {
     if (currentChapter + 2 <= listChapter.length) {
-      const next = listChapter[currentChapter + 1].replace(
-        `http://apimanga.mangasocial.online/rmanga/${slug}/`,
-        ""
-      );
-      console.log(currentChapter);
-      navigate(`/chapter/${slug}/${next}`);
+      const next = listChapter[currentChapter + 1];
+      setLoading(true)
+      navigate(`/chapter/${slug}/${next}/`);
+      setChooseChapter(next)
+      console.log(slug,next);
+      
     } else {
       alert("End of manga!!!");
     }
@@ -199,8 +209,12 @@ const ReadChapter = () => {
           </div>
         </div>
       </div>
-
-      <div className="flex flex-col items-center justify-center  ">
+              {/* IMAGE CHAPTER */}
+      {
+        loading?(
+          <LoadingWhite type={"spin"} color={"#FF9F66"} height={300} width={300} text="Loading Data"/>
+        ):(
+          <div className="flex flex-col items-center justify-center  ">
         {chapterDetail.image_chapter?.map((item, index) => (
           <div key={index}>
             <img
@@ -212,9 +226,11 @@ const ReadChapter = () => {
           </div>
         ))}
       </div>
+        )
+      }
 
       <div className="flex flex-col container gap-5">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center ">
           <div className="">
             <select
               name="cars"
