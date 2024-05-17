@@ -16,15 +16,26 @@ const ReadChapter = () => {
   const [listChapter, setListChapter] = useState([]);
   const [chooseChapter, setChooseChapter] = useState("");
   const sv = useSelector((state) => state.server.sv);
+  const readmode = useSelector((state) => state.ReadMode.readmode);
   const navigate = useNavigate();
   const fetchChapter = async () => {
     try {
-      const response = await axios.get(
-        `https://apimanga.mangasocial.online/rmanga/${slug}/${id}`
-      );
-
-      setChapterDetail(response.data);
-      console.log(chapterDetail);
+      if(readmode==true){
+        const response = await axios.get(
+          `https://apimanga.mangasocial.online/web/rmanga/${sv}/${slug}/${id}`
+        );
+  
+        setChapterDetail(response.data);
+        console.log(chapterDetail);
+      }
+      else{
+        const response = await axios.get(
+          `https://apimanga.mangasocial.online/rmanga/${slug}/${id}`
+        );
+  
+        setChapterDetail(response.data);
+        console.log(chapterDetail);
+      }
     } catch (error) {
       console.log("error", error);
     }
@@ -58,10 +69,18 @@ const ReadChapter = () => {
   };
   const fetchListChapter = async () => {
     try {
-      const response = await axios.get(
-        `https://apimanga.mangasocial.online/${sv}/rmanga/${slug}`
-      );
-      setListChapter(response.data[0].chapters);
+      if(readmode==true){
+        const response = await axios.get(
+          `https://apimanga.mangasocial.online/web/rmanga/${sv}/${slug}`
+        );
+        setListChapter(Object.keys(response.data.chapters));
+      }
+      else{
+        const response = await axios.get(
+          `https://apimanga.mangasocial.online/${sv}/rmanga/${slug}`
+        );
+        setListChapter(Object.keys(response.data.chapters));
+      }
     } catch (error) {
       console.log(error);
     }

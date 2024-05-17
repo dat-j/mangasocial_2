@@ -43,7 +43,7 @@ const NewRelease = () => {
                     rate={item?.rate}
                     update={item.time_release}
                     chapter={item?.chapter_new}
-                    path_segment={item?.path_segment_manga}
+                    path_segment={item?.path_segment_manga?item?.path_segment_manga:item?.url_manga.replace("https://apimanga.mangasocial.online/rmanga/","")}
 
                 />
             ))}

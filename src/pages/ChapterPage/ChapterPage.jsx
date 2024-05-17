@@ -13,6 +13,7 @@ import CMT_list from "./../../components/cmt_list";
 const ChapterPage = () => {
   const [showTab, setShowTab] = useState(true);
   const [chapterDetail, setChapterDetail] = useState([]);
+  const [listChapter, setListChapter] = useState([]);
   const [visibleChapterCount, setVisibleChapterCount] = useState(12);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [comment, setComment] = useState("");
@@ -46,6 +47,7 @@ const ChapterPage = () => {
           `https://apimanga.mangasocial.online/rmanga/${slug}`
         );
         setChapterDetail(response.data);
+        setListChapter(response.data.chapters)
       console.log("chapter detail:",response.data)
       }
       else{
@@ -53,6 +55,7 @@ const ChapterPage = () => {
           `https://apimanga.mangasocial.online/web/rmanga/${sv}/${slug}/`
         );
         setChapterDetail(response.data);
+        setListChapter(response.data.chapters)
       console.log("chapter detail:",response.data)
       }
       
@@ -70,7 +73,7 @@ const ChapterPage = () => {
     setVisibleChapterCount((prevCount) => prevCount + 10);
   };
 
-  const sortedChapters = chapterDetail[0]?.chapters.sort((a, b) => {
+  const sortedChapters = Object.keys(listChapter).sort((a, b) => {
     // Lấy 3 số sau ký tự "chapter-"
     const getLastNumber = (url) =>
       parseInt(
@@ -84,6 +87,13 @@ const ChapterPage = () => {
 
     return chapterNumberA - chapterNumberB;
   });
+  
+  const arrChapterLink = Object.keys(listChapter);
+  const linkList = arrChapterLink.map(function(link){
+    return listChapter[link]
+  }) 
+
+
 
   const viewsString = chapterDetail?.views || "";
   const startIndex = viewsString.lastIndexOf("has ") + 4;
@@ -317,9 +327,28 @@ const ChapterPage = () => {
                   alt=""
                   className="h-[32px] w-[32px]"
                 />
-                {/* <div>{(chapterDetail[0]?.chapters).length} chapters</div> */}
+                <div>{Object.keys(listChapter).length} chapters</div>
               </div>
-              <div className="px-12 py-6">
+              {
+                readmode==true?(
+                  <div className="px-12 py-6">
+                {linkList
+                  .slice(0, visibleChapterCount)
+                  .map((item, index) => (
+                    <div key={index}>
+                      <ChapterCard
+                        chapterLink={item}
+                        title={chapterDetail?.title}
+                        des={chapterDetail?.description}
+                        poster={chapterDetail?.poster}
+                        slug={slug}
+                        
+                      />
+                    </div>
+                  ))}
+              </div>
+                ):(
+                  <div className="px-12 py-6">
                 {sortedChapters
                   ?.slice(0, visibleChapterCount)
                   .map((chapter, index) => (
@@ -334,6 +363,8 @@ const ChapterPage = () => {
                     </div>
                   ))}
               </div>
+                )
+              }
               <div className="text-center mt-5">
                 <button
                   className="font-semibold text-[32px] leading-[40px] text-white  "
