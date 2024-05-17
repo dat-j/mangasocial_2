@@ -128,7 +128,13 @@ const ChapterPage = () => {
         }}
       >
         {loading ? (
-          <Loading type={"spin"} color={"#FF9F66"} height={400} width={400} text="Loading Poster..."/>
+          <Loading
+            type={"spin"}
+            color={"#FF9F66"}
+            height={400}
+            width={400}
+            text="Loading Poster..."
+          />
         ) : (
           <div className="relative">
             <img

@@ -1,4 +1,3 @@
-
 import CommingSoon from "../components/commingSoon";
 
 import Rank from "../components/rank";
@@ -14,7 +13,7 @@ import BestComicOfWeek from "./bestComicOfWeek/BestComicOfWeek";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Recommended from "../components/recommended";
-import ComedyComics from './../components/comeryComics';
+import ComedyComics from "./../components/comeryComics";
 import Top15Comics from "../components/top15Comics";
 import FreeComic from "../components/freeComic";
 import NewsComics from "../components/newsComics";
@@ -22,12 +21,11 @@ import ToggleReadMode from "../components/ToggleBtn/ToggleReadMode";
 import Loading from "../components/Loading/Loading";
 
 export default function Index() {
-  let sv = useSelector((state)=>state.server.sv);
-  const readmode = useSelector((state)=>state.ReadMode.readmode);
+  let sv = useSelector((state) => state.server.sv);
+  const readmode = useSelector((state) => state.ReadMode.readmode);
   return (
     <>
       <div className="cont">
-       
         {/* <div className="slider">
           <SliderImg
             arrImage={[slider1, slider2, slider3, slider4]}
@@ -44,7 +42,7 @@ export default function Index() {
             <p>See all</p>
           </Link>
         </div>
-        <NewRelease key={readmode}/>
+        <NewRelease key={readmode} />
 
         <div className="title-released-comic">
           <h2>Recent Comics</h2>
@@ -52,7 +50,7 @@ export default function Index() {
             <p>See all</p>
           </Link>
         </div>
-        <ComicRecent ></ComicRecent>
+        <ComicRecent></ComicRecent>
 
         <div className="title-released-comic">
           <h2>Recommended Comics</h2>
@@ -109,8 +107,8 @@ export default function Index() {
           <h2>Comment</h2>
         </div>
         <Comments></Comments>
-        <ToggleReadMode/>
+        <ToggleReadMode />
       </div>
-      </>
+    </>
   );
 }
