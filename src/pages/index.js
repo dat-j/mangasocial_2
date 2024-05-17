@@ -107,7 +107,7 @@ export default function Index() {
           <h2>Comment</h2>
         </div>
         <Comments></Comments>
-        <ToggleReadMode />
+        <ToggleReadMode key={readmode+1} />
       </div>
     </>
   );

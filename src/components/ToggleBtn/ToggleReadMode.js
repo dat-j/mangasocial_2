@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ToggleReadMode.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,6 @@ const ToggleReadMode = () => {
 
   const sv = useSelector((state)=>state.server.sv);
   const readmode = useSelector((state)=>state.ReadMode.readmode);
-
   const id_user = () =>{
     if(sessionStorage.getItem("user_id")==null){
         return 0;
